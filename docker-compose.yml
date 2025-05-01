@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres-login-service:
+    image: postgres:16
+    container_name: postgres-login-service
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: "no"
+
+  login-service:
+    build:
+      context: ./loginService
+      dockerfile: Dockerfile
+    container_name: login-service
+    ports:
+      - "${LOGIN_SERVICE_PORT}:${SERVER_PORT}"
+    depends_on:
+      - postgres-login-service
+    env_file:
+      - .env
+    restart: "no"
+    working_dir: /app
+    command: ["npm", "start"]
+
+volumes:
+  postgres_data:
