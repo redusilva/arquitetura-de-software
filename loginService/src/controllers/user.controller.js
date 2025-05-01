@@ -7,7 +7,7 @@ class UserController {
         const data = req.body;
 
         if (!data?.name || !data?.email || !data?.password) {
-            return res.status(400).send('Dados inválidos');
+            return res.status(400).json({ error: 'Dados inválidos' });
         }
 
         const result = await this.userService.createUser(data);
@@ -27,7 +27,7 @@ class UserController {
         const data = req.body;
 
         if (!data?.email || !data?.password) {
-            return res.status(400).send('Dados inválidos');
+            return res.status(400).json({ error: 'Dados inválidos' });
         }
 
         const login = await this.userService.loginUser(data);
@@ -46,12 +46,12 @@ class UserController {
     async validateUserToken(req, res) {
         const userId = Number(req?.params?.id);
         if (!userId) {
-            return res.status(403).json({ error: 'Usuário na URL inválido!' });
+            return res.status(400).json({ error: 'Usuário na URL inválido!' });
         }
 
         const token = req?.body?.token;
         if (!token) {
-            return res.status(403).json({ error: 'Token inválido!' });
+            return res.status(400).json({ error: 'Token inválido!' });
         }
 
         const result = await this.userService.validateUserToken(userId, token);
