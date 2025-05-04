@@ -5,7 +5,7 @@ const createServer = require('./config/serverConfig');
 const logRoutes = require('./routes/logRoutes');
 const systemRoutes = require('./routes/systemRoutes');
 
-// const authMiddleware = require('./middlewares/auth');
+const authenticateToken = require('./middlewares/authMiddleware');
 
 const app = createServer();
 
@@ -14,10 +14,10 @@ connectDB();
 
 // Aplica rotas
 app.use('/api/logs', 
-  // authMiddleware,
+   authenticateToken,
    logRoutes);
 app.use('/api/systems', 
- // authMiddleware,
+   authenticateToken,
    systemRoutes);
 
 // Inicia o servidor

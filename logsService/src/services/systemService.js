@@ -1,10 +1,16 @@
-const System = require('../models/system');
+// services/systemService.js
+const systemRepository = require('../repositories/systemRepository');
 
 async function createSystem({ name, description }) {
-  const system = new System({ name, description });
-  return await system.save();
+  const systemData = { name, description };
+  return await systemRepository.save(systemData);
+}
+
+async function getSystemById(systemId) {
+  return await systemRepository.findById(systemId);
 }
 
 module.exports = {
-  createSystem
+  createSystem,
+  getSystemById
 };
