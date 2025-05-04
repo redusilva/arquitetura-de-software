@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/authenticate/:id', async (req, res) => {
+router.post('/authenticate', async (req, res) => {
     try {
         const result = await userController.validateUserToken(req, res);
         return result;

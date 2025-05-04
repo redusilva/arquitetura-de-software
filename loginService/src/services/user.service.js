@@ -68,28 +68,12 @@ class UserService {
         };
     }
 
-    async validateUserToken(userId, token) {
-        const createdUser = await this.userRepository.findUserById(userId, pool);
-        if (!createdUser) {
-            return {
-                status: 404,
-                message: 'Usuário não cadastrado no sistema!'
-            }
-        }
-
+    async validateUserToken(token) {
         const decoded = verifyToken(token);
         if (!decoded?.valid) {
             return {
                 status: 401,
                 message: 'Token inválido!'
-            }
-        }
-
-        const payload = decoded?.payload;
-        if (payload?.id !== userId) {
-            return {
-                status: 401,
-                message: 'Usuário não autorizado!'
             }
         }
 
