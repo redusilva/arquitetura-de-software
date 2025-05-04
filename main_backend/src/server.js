@@ -5,6 +5,7 @@ const path = require('path'); // Para lidar com caminhos de arquivos
 
 const studentRouter = require('./routes/students.routes');
 const teacherRouter = require('./routes/teacher.routes');
+const disciplineRouter = require('./routes/discipline.routes');
 
 const { serverPort: port } = require('./config/env');
 const authMiddleware = require('./middlewares/auth');
@@ -26,6 +27,7 @@ const protectedRoutes = express.Router();
 protectedRoutes.use(authMiddleware);
 protectedRoutes.use('/alunos', studentRouter);
 protectedRoutes.use('/professores', teacherRouter);
+protectedRoutes.use('/disciplinas', disciplineRouter);
 
 app.use(protectedRoutes);
 
