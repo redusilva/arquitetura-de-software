@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express'); // Importando o Swagger UI
 const path = require('path'); // Para lidar com caminhos de arquivos
 
 const studentRouter = require('./routes/students.routes');
+const teacherRouter = require('./routes/teacher.routes');
 
 const { serverPort: port } = require('./config/env');
 const authMiddleware = require('./middlewares/auth');
@@ -24,6 +25,8 @@ app.get('/', (req, res) => {
 const protectedRoutes = express.Router();
 protectedRoutes.use(authMiddleware);
 protectedRoutes.use('/alunos', studentRouter);
+protectedRoutes.use('/professores', teacherRouter);
+
 app.use(protectedRoutes);
 
 app.listen(port, () => {

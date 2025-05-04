@@ -49,7 +49,7 @@ class StudentService {
         if (!currentStudent) {
             return {
                 status: 404,
-                message: 'Aluno nao encontrado!'
+                message: 'Aluno não encontrado!'
             }
         }
 
