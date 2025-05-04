@@ -940,6 +940,544 @@
                     }
                 }
             }
+        },
+        "/disciplinas/teacher": {
+            "post": {
+                "summary": "Cadastra professor na disciplina",
+                "description": "Cadastra um professor na disciplina",
+                "tags": [
+                    "Disciplinas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "teacherId": {
+                                        "type": "number",
+                                        "example": 1
+                                    },
+                                    "disciplineId": {
+                                        "type": "number",
+                                        "example": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Professor cadastrado na disciplina!"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "teacherId": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "disciplineId": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou professor não encontrados!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/teacher/{id}": {
+            "get": {
+                "summary": "Retorna professores da disciplina",
+                "description": "Retorna uma lista de professores da disciplina que ministram a disciplina",
+                "tags": [
+                    "Disciplinas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da disciplina",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number",
+                                                "example": 1,
+                                                "description": "ID da relação"
+                                            },
+                                            "teacherId": {
+                                                "type": "number",
+                                                "example": 1,
+                                                "description": "ID do professor"
+                                            },
+                                            "disciplineId": {
+                                                "type": "number",
+                                                "example": 1,
+                                                "description": "ID da disciplina"
+                                            },
+                                            "teacherName": {
+                                                "type": "string",
+                                                "example": "João da Silva",
+                                                "description": "Nome do professor"
+                                            },
+                                            "teacherEmail": {
+                                                "type": "string",
+                                                "example": "fulanodasilva@gmail",
+                                                "description": "Email do professor"
+                                            },
+                                            "teacherRegistration": {
+                                                "type": "string",
+                                                "example": "123456",
+                                                "description": "Matricula do professor"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina não encontrada!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/teacher/{idDisciplina}/{idProfessor}": {
+            "delete": {
+                "summary": "Remove professor da disciplina",
+                "description": "Remove um professor da disciplina",
+                "tags": [
+                    "Disciplinas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "idDisciplina",
+                        "in": "path",
+                        "description": "ID da disciplina",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "idProfessor",
+                        "in": "path",
+                        "description": "ID do professor",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou professor nao encontrados!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/aluno": {
+            "post": {
+                "summary": "Cadastra um aluno na disciplina",
+                "description": "Cadastra um aluno na disciplina",
+                "tags": [
+                    "Disciplinas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "studentId": {
+                                        "type": "number",
+                                        "example": 1
+                                    },
+                                    "disciplineId": {
+                                        "type": "number",
+                                        "example": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Aluno cadastrado na disciplina!"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "studentId": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "disciplineId": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou aluno nao encontrados!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/aluno/{id}": {
+            "get": {
+                "summary": "Busca os alunos cadastrados na disciplina",
+                "description": "Busca todos os alunos cadastrados na disciplina",
+                "tags": [
+                    "Disciplinas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da disciplina",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number",
+                                                "example": 1
+                                            },
+                                            "studentId": {
+                                                "type": "number",
+                                                "example": 1
+                                            },
+                                            "disciplineId": {
+                                                "type": "number",
+                                                "example": 1
+                                            },
+                                            "studentName": {
+                                                "type": "string",
+                                                "example": "Nome do aluno"
+                                            },
+                                            "studentEmail": {
+                                                "type": "string",
+                                                "example": "Email do aluno"
+                                            },
+                                            "studentRegistration": {
+                                                "type": "string",
+                                                "example": "Matricula do aluno"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina nao encontrada!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/aluno/{idDisciplina}/{idAluno}": {
+            "delete": {
+                "summary": "Remove um aluno da disciplina",
+                "description": "Remove um aluno da disciplina",
+                "tags": [
+                    "Disciplinas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "idDisciplina",
+                        "in": "path",
+                        "description": "ID da disciplina",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "idAluno",
+                        "in": "path",
+                        "description": "ID do aluno",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou aluno nao encontrados!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -950,6 +1488,15 @@
                     "error": {
                         "type": "string",
                         "example": "Descrição do erro!"
+                    }
+                }
+            },
+            "SuccessResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Operação realizada com sucesso!"
                     }
                 }
             },

@@ -8,16 +8,18 @@ datasource db {
 }
 
 model alunos {
-  id        Int     @id @default(autoincrement())
-  nome      String  @db.VarChar(255)
-  email     String  @db.VarChar(255)
-  matricula String  @db.VarChar(100)
-  notas     notas[]
+  id                 Int                  @id @default(autoincrement())
+  nome               String               @db.VarChar(255)
+  email              String               @db.VarChar(255)
+  matricula          String               @db.VarChar(100)
+  alunos_disciplinas alunos_disciplinas[]
+  notas              notas[]
 }
 
 model disciplinas {
   id                      Int                       @id @default(autoincrement())
   nome                    String                    @db.VarChar(255)
+  alunos_disciplinas      alunos_disciplinas[]
   notas                   notas[]
   professores_disciplinas professores_disciplinas[]
 }
@@ -27,8 +29,8 @@ model notas {
   id_aluno      Int
   id_disciplina Int
   valor         Int
-  alunos        alunos      @relation(fields: [id_aluno], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_notas_alunos")
-  disciplinas   disciplinas @relation(fields: [id_disciplina], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_notas_disciplinas")
+  alunos        alunos      @relation(fields: [id_aluno], references: [id], onDelete: Cascade, map: "fk_notas_alunos")
+  disciplinas   disciplinas @relation(fields: [id_disciplina], references: [id], onDelete: Cascade, map: "fk_notas_disciplinas")
 }
 
 model professores {
@@ -43,6 +45,14 @@ model professores_disciplinas {
   id            Int         @id @default(autoincrement())
   id_professor  Int
   id_disciplina Int
-  disciplinas   disciplinas @relation(fields: [id_disciplina], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_disciplina")
-  professores   professores @relation(fields: [id_professor], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_professor")
+  disciplinas   disciplinas @relation(fields: [id_disciplina], references: [id], onDelete: Cascade, map: "fk_disciplina")
+  professores   professores @relation(fields: [id_professor], references: [id], onDelete: Cascade, map: "fk_professor")
+}
+
+model alunos_disciplinas {
+  id            Int         @id @default(autoincrement())
+  id_disciplina Int
+  id_aluno      Int
+  alunos        alunos      @relation(fields: [id_aluno], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_aluno")
+  disciplinas   disciplinas @relation(fields: [id_disciplina], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_disciplina")
 }
