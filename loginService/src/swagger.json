@@ -103,23 +103,12 @@
                 }
             }
         },
-        "/users/authenticate/{id}": {
+        "/users/authenticate": {
             "post": {
                 "summary": "Valida token de usuário",
                 "description": "Valida se o token do usuário é válido ou não",
                 "tags": [
                     "Users"
-                ],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "description": "ID do usuário",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
                 ],
                 "requestBody": {
                     "required": true,

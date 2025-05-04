@@ -44,17 +44,12 @@ class UserController {
     }
 
     async validateUserToken(req, res) {
-        const userId = Number(req?.params?.id);
-        if (!userId) {
-            return res.status(400).json({ error: 'Usuário na URL inválido!' });
-        }
-
         const token = req?.body?.token;
         if (!token) {
             return res.status(400).json({ error: 'Token inválido!' });
         }
 
-        const result = await this.userService.validateUserToken(userId, token);
+        const result = await this.userService.validateUserToken(token);
         if (result?.status === 200) {
             return res.status(200).json({ message: 'Token válido!' });
         }

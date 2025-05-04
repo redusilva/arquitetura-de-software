@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres-login-service:
     image: postgres:16
@@ -11,7 +9,30 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres-login-data:/var/lib/postgresql/data
+    restart: "no"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  postgres-main-backend:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_MAIN_BACKEND_USER} -d ${POSTGRES_MAIN_BACKEND_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    image: postgres:16
+    container_name: postgres-main-backend
+    ports:
+      - "${POSTGRES_MAIN_BACKEND_DATABASE_PORT}:${POSTGRES_MAIN_BACKEND_PORT}"
+    environment:
+      POSTGRES_USER: ${POSTGRES_MAIN_BACKEND_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_MAIN_BACKEND_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_MAIN_BACKEND_NAME}
+    volumes:
+      - postgres-main-backend-data:/var/lib/postgresql/data
     restart: "no"
 
   login-service:
@@ -22,12 +43,33 @@ services:
     ports:
       - "${LOGIN_SERVICE_PORT}:${SERVER_PORT}"
     depends_on:
-      - postgres-login-service
+      postgres-login-service:
+        condition: service_healthy
     env_file:
       - .env
     restart: "no"
     working_dir: /app
     command: ["npm", "start"]
+    
+  main-backend:
+    depends_on:
+      postgres-main-backend:
+        condition: service_healthy
+    build:
+      context: ./main_backend
+      dockerfile: Dockerfile
+    container_name: main-backend
+    ports:
+      - "${EXPOSE_MAIN_BACKEND_SERVICE_PORT}:${MAIN_BACKEND_SERVICE_PORT}"
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_MAIN_BACKEND_USER}:${POSTGRES_MAIN_BACKEND_PASSWORD}@postgres-main-backend:${POSTGRES_MAIN_BACKEND_PORT}/${POSTGRES_MAIN_BACKEND_NAME}"
+      SERVER_PORT: ${EXPOSE_MAIN_BACKEND_SERVICE_PORT}
+      AUTH_SERVICE_URL: http://login-service:4000
+    restart: "no"
+    working_dir: /app
+    command: sh -c "npx prisma db push && npm start"
 
 volumes:
-  postgres_data:
+  postgres-login-data:
+  postgres-main-backend-data:
+
