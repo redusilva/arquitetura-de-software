@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres-login-service:
     image: postgres:16
@@ -18,11 +20,6 @@ services:
       retries: 10
 
   postgres-main-backend:
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_MAIN_BACKEND_USER} -d ${POSTGRES_MAIN_BACKEND_NAME}"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
     image: postgres:16
     container_name: postgres-main-backend
     ports:
@@ -34,6 +31,11 @@ services:
     volumes:
       - postgres-main-backend-data:/var/lib/postgresql/data
     restart: "no"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_MAIN_BACKEND_USER} -d ${POSTGRES_MAIN_BACKEND_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   login-service:
     build:
@@ -50,17 +52,17 @@ services:
     restart: "no"
     working_dir: /app
     command: ["npm", "start"]
-    
+
   main-backend:
-    depends_on:
-      postgres-main-backend:
-        condition: service_healthy
     build:
       context: ./main_backend
       dockerfile: Dockerfile
     container_name: main-backend
     ports:
       - "${EXPOSE_MAIN_BACKEND_SERVICE_PORT}:${MAIN_BACKEND_SERVICE_PORT}"
+    depends_on:
+      postgres-main-backend:
+        condition: service_healthy
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_MAIN_BACKEND_USER}:${POSTGRES_MAIN_BACKEND_PASSWORD}@postgres-main-backend:${POSTGRES_MAIN_BACKEND_PORT}/${POSTGRES_MAIN_BACKEND_NAME}"
       SERVER_PORT: ${EXPOSE_MAIN_BACKEND_SERVICE_PORT}
@@ -69,7 +71,18 @@ services:
     working_dir: /app
     command: sh -c "npx prisma db push && npm start"
 
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: flutter_web
+    restart: unless-stopped
+    ports:
+      - "6660:80"      # mapeia localhost:6660 → container:80
+    volumes:
+      # Monta a pasta local com o build estático para facilitar atualizações sem rebuild
+      - ./frontend/web:/usr/share/nginx/html:ro
+
 volumes:
   postgres-login-data:
   postgres-main-backend-data:
-
