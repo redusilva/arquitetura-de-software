@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: flutter_web
+    restart: unless-stopped
+    ports:
+      - "6660:80"      # mapeia localhost:6660 → container:80
+    volumes:
+      # (opcional) monta a pasta local para facilitar atualizações sem rebuild
+      - ./web:/usr/share/nginx/html:ro
