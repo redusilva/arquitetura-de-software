@@ -1,6 +1,7 @@
 require('dotenv').config();
 const connectDB = require('./config/dbConfig');
 const createServer = require('./config/serverConfig');
+const setupSwagger = require('./config/swaggerConfig');
 
 const logRoutes = require('./routes/logRoutes');
 const systemRoutes = require('./routes/systemRoutes');
@@ -19,6 +20,10 @@ app.use('/api/logs',
 app.use('/api/systems', 
    authenticateToken,
    systemRoutes);
+
+// Configuração do Swagger
+setupSwagger(app);
+
 
 // Inicia o servidor
 const PORT = process.env.PORT || 4001;

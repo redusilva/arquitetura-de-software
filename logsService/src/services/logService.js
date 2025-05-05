@@ -1,14 +1,14 @@
 const logRepository = require('../repositories/logRepository');
+const mongoose = require('mongoose');  // Importando mongoose para usar o ObjectId
 
 class LogService {
   // Método para criar um novo log
   async createLog(userId, logData) {
     console.log('Dados recebidos para criar log:', logData);  // Verifique os dados recebidos
 
-
     try {
       // Verificando se o logData contém as informações necessárias
-      if (!logData || !logData.systemId || !logData.message || !logData.source) {
+      if (!logData || !logData.systemId || !logData.message || !logData.source || !logData.level) {
         throw new Error('Dados de log incompletos');
       }
 
@@ -18,7 +18,7 @@ class LogService {
         systemId: logData.systemId,
         message: logData.message,
         source: logData.source,
-        timestamp: new Date()
+        level: logData.level,
       };
 
       // Lógica para salvar o log no banco de dados
@@ -37,13 +37,26 @@ class LogService {
   }
 
   // Método para buscar logs por sistema e usuário
-  async getLogsBySystem(systemId, userId) {
+  async getLogsBySystem(systemId) {
+    console.log('Buscando logs para systemId:', systemId);
+  
     try {
-      // Lógica para buscar logs por sistema, podendo filtrar por usuário
-      const logs = await logRepository.findBySystemAndUser(systemId, userId);
-      return logs;
+      // Convertendo o systemId para ObjectId usando 'new'
+      const objectId = new mongoose.Types.ObjectId(systemId);  // Instanciando corretamente o ObjectId
+  
+      // Lógica para buscar logs por sistema
+      const logs = await logRepository.findBySystem(objectId);
+  
+      // Verificando se logs foram encontrados
+      if (logs && logs.length > 0) {
+        console.log('Logs encontrados:', logs);
+        return logs;
+      } else {
+        console.log('Nenhum log encontrado para o systemId:', systemId);
+        return [];  // Retorna um array vazio se não houver logs
+      }
     } catch (error) {
-      console.error('Erro ao buscar logs:', error); // Logando erro para depuração
+      console.error('Erro ao buscar logs:', error);  // Logando erro para depuração
       return {
         status: 500,
         message: 'Erro interno ao buscar logs'
@@ -52,4 +65,4 @@ class LogService {
   }
 }
 
-module.exports = LogService;
+module.exports = new LogService();

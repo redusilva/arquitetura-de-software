@@ -1,4 +1,3 @@
-// repositories/systemRepository.js
 const System = require('../models/system');
 
 class SystemRepository {
@@ -11,11 +10,14 @@ class SystemRepository {
     return await System.findById(systemId);
   }
 
+  async findOne(query) {
+    return await System.findOne(query); // Método para buscar um sistema pelo nome
+  }
+
   async findAll() {
     return await System.find();
   }
 
-  // Outros métodos, se necessário
 }
 
 module.exports = new SystemRepository();

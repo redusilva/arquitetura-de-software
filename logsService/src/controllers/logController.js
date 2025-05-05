@@ -1,47 +1,59 @@
-const LogService = require('../services/logService');
-const logService = new LogService();
+const logService = require('../services/logService');
+const mongoose = require('mongoose');
 
 class LogController {
   async create(req, res) {
-      // O usuário autenticado pode ser acessado através de req.user
-      const userId = req.user.id;  // O ID do usuário autenticado
-      console.log('Usuário autenticado:', userId);  // Verifique o valor
+    try {
+      const userId = req.userId;
+      console.log('Usuário autenticado:', userId);
 
       const logData = req.body;
-      console.log('Dados do log:', logData);  // Verifique os dados do log
+      console.log('Dados do log:', logData);
 
-      // Lógica para criar o log, associando ao usuário autenticado
       const result = await logService.createLog(userId, logData);
 
       if (result?.status === 201) {
-          return res.status(201).json({
-              message: 'Log criado com sucesso!',
-              data: result?.data
-          });
+        return res.status(201).json({
+          message: 'Log criado com sucesso!',
+          data: result.data
+        });
       }
 
-      return res.status(result?.status).json({
-          error: result?.message || 'Erro ao criar log!'
+      return res.status(result?.status || 500).json({
+        error: result?.message || 'Erro ao criar log!'
       });
+    } catch (error) {
+      console.error('Erro no controller ao criar log:', error);
+      return res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
   }
 
   async getBySystem(req, res) {
+    try {
       const { systemId } = req.params;
-      const userId = req.user.id;  // ID do usuário autenticado
+      const userId = req.user?.id || req.userId;
 
-      // Lógica para buscar logs do sistema, possivelmente filtrando por usuário também
-      const logs = await logService.getLogsBySystem(systemId, userId);
+      console.log('Buscando logs para o systemId:', systemId);
+
+      // Converte systemId para ObjectId
+      const objectId = new mongoose.Types.ObjectId(systemId);
+
+      const logs = await logService.getLogsBySystem(objectId, userId);
 
       if (logs?.length > 0) {
-          return res.status(200).json({
-              message: 'Logs encontrados!',
-              data: logs
-          });
+        return res.status(200).json({
+          message: 'Logs encontrados!',
+          data: logs
+        });
       }
 
       return res.status(404).json({
-          error: 'Nenhum log encontrado para o sistema solicitado.'
+        error: 'Nenhum log encontrado para o sistema solicitado.'
       });
+    } catch (error) {
+      console.error('Erro no controller ao buscar logs:', error);
+      return res.status(500).json({ error: 'Erro interno no servidor.' });
+    }
   }
 }
 
