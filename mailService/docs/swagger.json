@@ -1,0 +1,62 @@
+{
+	"definitions": {},
+	"info": {
+		"description": "powered by Flasgger",
+		"termsOfService": "/tos",
+		"title": "A swagger API",
+		"version": "0.0.1"
+	},
+	"paths": {
+		"/send-email": {
+			"post": {
+				"parameters": [
+					{
+						"description": "Token JWT",
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"properties": {
+								"message": {
+									"type": "string"
+								},
+								"subject": {
+									"type": "string"
+								},
+								"to": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"to",
+								"message"
+							],
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Email enviado com sucesso"
+					},
+					"400": {
+						"description": "Campos obrigatórios ausentes"
+					},
+					"401": {
+						"description": "Não autorizado"
+					}
+				},
+				"tags": [
+					"Emails"
+				]
+			}
+		}
+	},
+	"swagger": "2.0"
+}
