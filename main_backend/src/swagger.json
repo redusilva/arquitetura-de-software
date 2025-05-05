@@ -1191,7 +1191,7 @@
                         }
                     },
                     "404": {
-                        "description": "Disciplina ou professor nao encontrados!",
+                        "description": "Disciplina ou professor não encontrados!",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1285,7 +1285,7 @@
                         }
                     },
                     "404": {
-                        "description": "Disciplina ou aluno nao encontrados!",
+                        "description": "Disciplina ou aluno não encontrados!",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1381,7 +1381,7 @@
                         }
                     },
                     "404": {
-                        "description": "Disciplina nao encontrada!",
+                        "description": "Disciplina não encontrada!",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1457,7 +1457,349 @@
                         }
                     },
                     "404": {
-                        "description": "Disciplina ou aluno nao encontrados!",
+                        "description": "Disciplina ou aluno não encontrados!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notas": {
+            "post": {
+                "summary": "Cria uma nota",
+                "description": "Cria uma nova nota no sistema",
+                "tags": [
+                    "Notas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "studentId": {
+                                        "type": "number",
+                                        "description": "ID do aluno"
+                                    },
+                                    "disciplineId": {
+                                        "type": "number",
+                                        "description": "ID da disciplina"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "description": "Nota"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nota criada com sucesso!"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Note"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notas/{id}": {
+            "get": {
+                "summary": "Retorna todas as notas do aluno",
+                "description": "Retorna todas as disciplinas cadastradas no sistema que o aluno está matriculado. Caso não tenha notas, retorna um array vazio",
+                "tags": [
+                    "Notas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do aluno",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "studentId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "disciplineId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "disciplineName": {
+                                                "type": "string",
+                                                "example": "Matemática"
+                                            },
+                                            "subjectNote": {
+                                                "type": "number",
+                                                "example": 0
+                                            },
+                                            "teachers": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Falando da Silva"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "fulanodasilva@gmail.com"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nota não encontrada!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta nota",
+                "description": "Deleta uma nota",
+                "tags": [
+                    "Notas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da nota",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou aluno não encontrados!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza uma nota",
+                "description": "Atualiza uma nota no sistema",
+                "tags": [
+                    "Notas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da nota",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "number",
+                                        "description": "Nota"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Requisição executada corretamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nota atualizada com sucesso!"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Note"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou aluno não encontrados!",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1531,6 +1873,27 @@
                     "name": {
                         "type": "string",
                         "description": "Nome da disciplina"
+                    }
+                }
+            },
+            "Note": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "ID da nota"
+                    },
+                    "studentId": {
+                        "type": "number",
+                        "description": "ID do aluno"
+                    },
+                    "disciplineId": {
+                        "type": "number",
+                        "description": "ID da disciplina"
+                    },
+                    "value": {
+                        "type": "number",
+                        "description": "Nota"
                     }
                 }
             }
