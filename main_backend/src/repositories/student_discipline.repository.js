@@ -40,6 +40,15 @@ class StudentDisciplineRepository {
         });
         return result;
     }
+
+    async getAllCandidateRegisteredSubjects(id, database) {
+        const result = await database.alunos_disciplinas.findMany({
+            where: {
+                id_aluno: id
+            }
+        })
+        return result;
+    }
 }
 
 module.exports = StudentDisciplineRepository;

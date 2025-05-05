@@ -29,7 +29,7 @@ router.post('/teacher', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -39,7 +39,7 @@ router.get('/teacher/:id', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -49,7 +49,7 @@ router.delete('/teacher/:idDisciplina/:idProfessor', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -59,7 +59,7 @@ router.post('/aluno', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -69,7 +69,7 @@ router.get('/aluno/:id', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -79,7 +79,7 @@ router.delete('/aluno/:idDisciplina/:idAluno', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -89,7 +89,7 @@ router.post('/', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -99,7 +99,7 @@ router.get('/', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao buscar as disciplinas' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -109,7 +109,7 @@ router.put('/:id', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
@@ -119,7 +119,7 @@ router.delete('/:id', async (req, res) => {
         return result;
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Erro ao criar aluno' });
+        return res.status(500).json({ error: 'Erro interno do servidor!' });
     }
 });
 
