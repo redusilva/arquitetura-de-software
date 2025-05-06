@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:18
 
 # Criar diretório do app
 WORKDIR /app
@@ -12,8 +12,12 @@ RUN npm install
 # Copiar o restante do código
 COPY . .
 
+# Copiar e dar permissão ao entrypoint
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
 # Expor a porta que o app vai rodar
 EXPOSE 5000
 
-# Comando para rodar o servidor
-CMD ["node", "src/app.js"]
+# Comando de entrada
+CMD ["./entrypoint.sh"]

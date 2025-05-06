@@ -3,7 +3,15 @@ const System = require('../models/system');
 class SystemRepository {
   async save(systemData) {
     const system = new System(systemData);
-    return await system.save();
+    console.log('Tentando salvar o sistema:', systemData); // Adicione este log
+    try {
+      const savedSystem = await system.save();
+      console.log('Sistema salvo com sucesso:', savedSystem); // Verifique o que é retornado
+      return savedSystem;
+    } catch (error) {
+      console.error('Erro ao salvar sistema:', error); // Capture qualquer erro
+      throw error;
+    }
   }
 
   async findById(systemId) {
