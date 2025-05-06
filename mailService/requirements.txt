@@ -1,0 +1,6 @@
+Flask
+requests
+flasgger
+python-dotenv
+gunicorn
+

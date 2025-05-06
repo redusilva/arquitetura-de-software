@@ -44,7 +44,8 @@ class NotesRepository {
                                         id_aluno: id
                                     },
                                     select: {
-                                        valor: true
+                                        valor: true,
+                                        id: true
                                     }
                                 },
                                 professores_disciplinas: {

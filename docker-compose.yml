@@ -53,6 +53,26 @@ services:
     working_dir: /app
     command: ["npm", "start"]
 
+  # mail_service:
+  #   build:
+  #     context: ./mailService
+  #     dockerfile: Dockerfile
+  #   container_name: mail_service
+  #   restart: "no"
+  #   ports:
+  #     - "4002:4002"
+  #   environment:
+  #     - AUTH_SERVICE_URL=http://login-service:4000/users/authenticate
+  #     - LOG_SERVICE_URL={LOG_SERVICE_URL}
+  #     - SMTP_SERVER={SMTP_SERVER}
+  #     - SMTP_PORT={SMTP_PORT}
+  #     - SMTP_USERNAME={SMTP_USERNAME}
+  #     - SMTP_PASSWORD={SMTP_PASSWORD}
+  #   volumes:
+  #     - ./mailService:/app
+  #   depends_on:
+  #     - login-service
+
   main-backend:
     build:
       context: ./main_backend
@@ -76,11 +96,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: flutter_web
-    restart: unless-stopped
+    restart: "no"
     ports:
-      - "6660:80"      # mapeia localhost:6660 → container:80
+      - "6660:80"
     volumes:
-      # Monta a pasta local com o build estático para facilitar atualizações sem rebuild
       - ./frontend/web:/usr/share/nginx/html:ro
 
 volumes:
