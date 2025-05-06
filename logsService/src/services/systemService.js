@@ -14,7 +14,7 @@ async function createSystem({ name, description }, userId) {
     systemId: system._id,  // ID do sistema recém-criado
     message: logMessage,
     level: 'info',  // Definindo o nível do log (pode ser ajustado conforme necessário)
-    source: 'aplicacao'
+    service: 'aplicacao'
   });
 
   return system;

@@ -8,7 +8,7 @@ class LogService {
 
     try {
       // Verificando se o logData contém as informações necessárias
-      if (!logData || !logData.systemId || !logData.message || !logData.source || !logData.level) {
+      if (!logData || !logData.systemId || !logData.message || !logData.service || !logData.level) {
         throw new Error('Dados de log incompletos');
       }
 
@@ -17,7 +17,7 @@ class LogService {
         userId,
         systemId: logData.systemId,
         message: logData.message,
-        source: logData.source,
+        service: logData.service,
         level: logData.level,
       };
 

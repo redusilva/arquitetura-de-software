@@ -6,7 +6,7 @@ class LogRepository {
   async save(logData) {
     try {
       // Verificando se os dados são válidos
-      if (!logData || !logData.systemId || !logData.message || !logData.source) {
+      if (!logData || !logData.systemId || !logData.message || !logData.service) {
         throw new Error('Dados de log incompletos. Verifique os campos: systemId, message e source.');
       }
 

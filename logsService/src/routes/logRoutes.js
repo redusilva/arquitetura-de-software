@@ -21,7 +21,7 @@ const logController = new LogController();
  *               level:
  *                 type: string
  *                 enum: [info, warn, error]
- *               source:
+ *               service:
  *                 type: string
  *                 enum: [aplicacao, auth, emails]
  *               systemId:
