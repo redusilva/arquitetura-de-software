@@ -56,7 +56,7 @@ class NotesService {
                 studentId: note?.id_aluno,
                 disciplineId: note?.disciplinas?.id,
                 disciplineName: note?.disciplinas?.nome,
-                subjectId: note?.disciplinas?.notas[0]?.id || 0,
+                noteId: note?.disciplinas?.notas[0]?.id || 0,
                 subjectNote: note?.disciplinas?.notas[0]?.valor || 0,
                 teachers: note?.disciplinas?.professores_disciplinas?.map((teacher) => ({
                     id: teacher?.professores?.id,

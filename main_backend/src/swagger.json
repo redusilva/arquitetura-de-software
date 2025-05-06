@@ -1603,7 +1603,7 @@
                                                 "type": "string",
                                                 "example": "Matemática"
                                             },
-                                            "subjectId": {
+                                            "noteId": {
                                                 "type": "number",
                                                 "example": 0
                                             },
