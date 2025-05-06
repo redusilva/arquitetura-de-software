@@ -1,5 +1,4 @@
 const systemService = require('../services/systemService');
-const logService = require('../services/logService');
 
 exports.create = async (req, res) => {
   try {
@@ -16,14 +15,6 @@ exports.create = async (req, res) => {
     }
 
     const system = await systemService.createSystem({ name, description }, userId);
-
-    const logMessage = `Sistema ${name} criado com sucesso.`;
-    await logService.createLog(userId, {
-      systemId: system._id,
-      message: logMessage,
-      source: 'aplicacao',
-      level: 'info',
-    });
 
     res.status(201).json(system);
   } catch (err) {
