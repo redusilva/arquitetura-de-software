@@ -6,8 +6,8 @@ class LogRepository {
   async save(logData) {
     try {
       // Verificando se os dados são válidos
-      if (!logData || !logData.systemId || !logData.message || !logData.service) {
-        throw new Error('Dados de log incompletos. Verifique os campos: systemId, message e source.');
+      if (!logData || !logData.systemId || !logData.message || !logData.service || !logData.level) {
+        throw new Error('Dados de log incompletos. Verifique os campos: systemId, message, service e level.');
       }
 
       const log = new Log(logData);
@@ -19,7 +19,7 @@ class LogRepository {
     }
   }
 
-  // Método para buscar logs por sistema e usuário
+  // Método para buscar logs por sistema
   async findBySystem(systemId) {
     console.log('Consultando logs com systemId:', systemId);
   

@@ -36,13 +36,12 @@ class LogService {
     }
   }
 
-  // Método para buscar logs por sistema e usuário
+  // Método para buscar logs por sistema
   async getLogsBySystem(systemId) {
     console.log('Buscando logs para systemId:', systemId);
   
     try {
-      // Convertendo o systemId para ObjectId usando 'new'
-      const objectId = new mongoose.Types.ObjectId(systemId);  // Instanciando corretamente o ObjectId
+      const objectId = new mongoose.Types.ObjectId(systemId);
   
       // Lógica para buscar logs por sistema
       const logs = await logRepository.findBySystem(objectId);

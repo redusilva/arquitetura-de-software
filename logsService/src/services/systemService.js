@@ -8,12 +8,12 @@ async function createSystem({ name, description }, userId) {
   // Cria o sistema
   const system = await systemRepository.save(systemData);
 
-  // Agora, criamos o log com o systemId
+  // Criando o log com o systemId
   const logMessage = `Sistema ${name} criado com sucesso.`;
   await logService.createLog(userId, {
     systemId: system._id,  // ID do sistema recém-criado
     message: logMessage,
-    level: 'info',  // Definindo o nível do log (pode ser ajustado conforme necessário)
+    level: 'info',
     service: 'aplicacao'
   });
 

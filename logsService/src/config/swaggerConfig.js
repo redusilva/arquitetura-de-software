@@ -3,14 +3,14 @@ const swaggerUi = require('swagger-ui-express');
 
 const options = {
   definition: {
-    openapi: '3.0.0', // Versão do OpenAPI
+    openapi: '3.0.0',
     info: {
-      title: 'API de Logs', // Título da sua API
+      title: 'API de Logs',
       version: '1.0.0',
       description: 'Documentação da API do microsserviço de Logs',
     },
   },
-  apis: ['./src/routes/*.js'], // Caminho para os arquivos das rotas
+  apis: ['./src/routes/*.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(options);

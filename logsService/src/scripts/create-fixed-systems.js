@@ -23,7 +23,7 @@ const systems = [
 
 async function seed() {
   try {
-    await mongoose.connect('mongodb://mongodb:27017/logs'); // ou a URI do seu Mongo
+    await mongoose.connect('mongodb://mongodb:27017/logs');
     for (const data of systems) {
       const exists = await System.findOne({ _id: data._id }); // Verifica se já existe pelo ID fixo
       if (!exists) {
