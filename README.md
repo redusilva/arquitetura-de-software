@@ -90,7 +90,7 @@ Plataforma acadêmica composta por microsserviços e aplicações web para gest�
 3. Aguarde todos os contêineres iniciarem (pode levar alguns instantes na primeira vez).
 
 4. No navegador, acesse: http://localhost:6660
-5. Você verá a seguinte tela abaixo, crie um usuário teste e então faça login.
+5. Você verá a tela abaixo. Crie um usuário de teste e, então, faça login.
 
 ![image](https://github.com/user-attachments/assets/9c95103d-4d43-4b47-956f-0afccf6156c6)
 
