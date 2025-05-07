@@ -1,4 +1,4 @@
-# Arquitetura de Software – Plataforma Acadêmica
+# Arquitetura de Software – Plataforma Acadêmica M.U.S.A
 
 Repositório: https://github.com/redusilva/arquitetura-de-software/tree/main
 
@@ -93,5 +93,12 @@ Plataforma acadêmica composta por microsserviços e aplicações web para gest�
 5. Você verá a seguinte tela abaixo, crie um usuário teste e então faça login.
 
 ![image](https://github.com/user-attachments/assets/9c95103d-4d43-4b47-956f-0afccf6156c6)
+
+
+## 🎨 Detalhe artístico
+
+1. O sistema foi nomeado com a sigla M.U.S.A (Micro-serviços Unificados em único sistema acadêmico).
+2. A sigla remete a arquitetura do sistema, contendo várias funções de micro-serviços unificados
+3. O nome em sí, remete as musas da mitologia grega, seres divinas ligadas as arte, a ciência e a acadêmia.
 
 
