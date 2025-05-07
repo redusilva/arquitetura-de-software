@@ -97,8 +97,8 @@ Plataforma acadêmica composta por microsserviços e aplicações web para gest�
 
 ## 🎨 Detalhe artístico
 
-1. O sistema foi nomeado com a sigla M.U.S.A (Micro-serviços Unificados em único sistema acadêmico).
-2. A sigla remete a arquitetura do sistema, contendo várias funções de micro-serviços unificados
-3. O nome em sí, remete as musas da mitologia grega, seres divinas ligadas as arte, a ciência e a acadêmia.
+1. O sistema foi nomeado com a sigla M.U.S.A (Micro-serviços Unificados em único Sistema Acadêmico).
+2. A sigla remete à arquitetura do sistema, contendo várias funções de micro-serviços unificados.
+3. O nome em sí, remete às Musas da mitologia grega, criaturas divinas ligadas às artes, à ciência e à acadêmia.
 
 
