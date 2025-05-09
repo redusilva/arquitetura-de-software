@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  servico-email:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: my-python-app:latest
+    container_name: servico-email
+    ports:
+      - "4002:4002"
+    environment:
+      FLASK_APP: app.py
+      FLASK_RUN_HOST: localhost
+      PYTHONUNBUFFERED: '1'
