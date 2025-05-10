@@ -8,6 +8,7 @@ const authMiddleware = async (req, res, next) => {
             token
         });
         if (response.status === 200) {
+            req.token = token;
             return next();
         }
         return res.status(401).json({ error: 'Usuário não autenticado!' });

@@ -1,3 +1,5 @@
+const LoggerService = require("../services/logs.service");
+
 class NotesController {
     constructor(notesService) {
         this.notesService = notesService;
@@ -15,8 +17,12 @@ class NotesController {
         const disciplineId = Number(data?.disciplineId);
         const value = Number(data?.value);
 
+        const logger = new LoggerService();
         const result = await this.notesService.create(studentId, disciplineId, value);
         if (result?.status === 201) {
+            logger.createLog({
+                message: `Nota ${result?.message?.value} cadastrada para o aluno ${result?.message?.studentId} na disciplina ${result?.message?.disciplineId} com sucesso!`,
+            }, req.token);
             return res.status(result?.status).json({
                 message: "Nota criada com sucesso!",
                 data: result?.message

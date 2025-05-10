@@ -13,6 +13,9 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
 const authServiceUrl = process.env.AUTH_SERVICE_URL;
+const logsServiceUrl = process.env.LOGS_SERVICE_URL;
+const logsSystemId = process.env.LOGS_SYSTEM_ID;
+const logsServiceName = process.env.LOGS_SERVICE_NAME;
 
 module.exports = {
     databaseUser,
@@ -25,4 +28,7 @@ module.exports = {
     JWT_SECRET,
     JWT_EXPIRES_IN,
     authServiceUrl,
+    logsServiceUrl,
+    logsSystemId,
+    logsServiceName
 };

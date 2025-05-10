@@ -63,6 +63,8 @@ services:
     depends_on:
       postgres-main-backend:
         condition: service_healthy
+      logs:
+        condition: service_started
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_MAIN_BACKEND_USER}:${POSTGRES_MAIN_BACKEND_PASSWORD}@postgres-main-backend:${POSTGRES_MAIN_BACKEND_PORT}/${POSTGRES_MAIN_BACKEND_NAME}"
       SERVER_PORT: ${EXPOSE_MAIN_BACKEND_SERVICE_PORT}
@@ -71,22 +73,44 @@ services:
     working_dir: /app
     command: sh -c "npx prisma db push && npm start"
 
-  servico-email:
-    build:
-      context: ./mailService
-      dockerfile: Dockerfile
-    image: my-python-app:latest
-    container_name: servico-email
+  # servico-email:
+  #   build:
+  #     context: ./mailService
+  #     dockerfile: Dockerfile
+  #   image: my-python-app:latest
+  #   container_name: servico-email
+  #   ports:
+  #     - "4002:4002"
+  #   environment:
+  #     FLASK_APP: app.py
+  #     FLASK_RUN_HOST: localhost
+  #     PYTHONUNBUFFERED: '1'
+  #   restart: "no"
+  #   depends_on:
+  #     postgres-login-service:
+  #       condition: service_healthy
+
+  mongo:
+    image: mongo:6
+    container_name: mongodb
     ports:
-      - "4002:4002"
-    environment:
-      FLASK_APP: app.py
-      FLASK_RUN_HOST: localhost
-      PYTHONUNBUFFERED: '1'
-    restart: "no"
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  logs:
+    build:
+      context: ./logsService
+      dockerfile: Dockerfile
+    container_name: logs_service
+    ports:
+      - "4001:4001"
     depends_on:
-      postgres-login-service:
-        condition: service_healthy
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/logs
+    working_dir: /app
+    command: sh -c "npm run create-seed && npm start"
 
   web:
     build:
@@ -103,3 +127,4 @@ services:
 volumes:
   postgres-login-data:
   postgres-main-backend-data:
+  mongo_data:
