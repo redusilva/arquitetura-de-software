@@ -12,6 +12,11 @@ const bcryptSaltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS, 10);
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
+const systemToken = process.env.SYSTEM_TOKEN;
+const logsServiceUrl = process.env.LOGS_SERVICE_URL;
+const logsServiceName = process.env.EMAIL_SERVICE_NAME;
+const logsSystemId = process.env.EMAIL_SYSTEM_ID;
+
 module.exports = {
     databaseUser,
     databasePassword,
@@ -22,4 +27,8 @@ module.exports = {
     bcryptSaltRounds,
     JWT_SECRET,
     JWT_EXPIRES_IN,
+    systemToken,
+    logsServiceUrl,
+    logsServiceName,
+    logsSystemId
 };

@@ -8,6 +8,7 @@ const authenticateToken = async (req, res, next) => {
         const response = await axios.post(`${authServiceUrl}/users/authenticate`, {
             token
         });
+
         if (response.status === 200) {
             return next();
         }
