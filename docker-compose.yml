@@ -53,26 +53,6 @@ services:
     working_dir: /app
     command: ["npm", "start"]
 
-  # mail_service:
-  #   build:
-  #     context: ./mailService
-  #     dockerfile: Dockerfile
-  #   container_name: mail_service
-  #   restart: "no"
-  #   ports:
-  #     - "4002:4002"
-  #   environment:
-  #     - AUTH_SERVICE_URL=http://login-service:4000/users/authenticate
-  #     - LOG_SERVICE_URL={LOG_SERVICE_URL}
-  #     - SMTP_SERVER={SMTP_SERVER}
-  #     - SMTP_PORT={SMTP_PORT}
-  #     - SMTP_USERNAME={SMTP_USERNAME}
-  #     - SMTP_PASSWORD={SMTP_PASSWORD}
-  #   volumes:
-  #     - ./mailService:/app
-  #   depends_on:
-  #     - login-service
-
   main-backend:
     build:
       context: ./main_backend
@@ -91,6 +71,23 @@ services:
     working_dir: /app
     command: sh -c "npx prisma db push && npm start"
 
+  servico-email:
+    build:
+      context: ./mailService
+      dockerfile: Dockerfile
+    image: my-python-app:latest
+    container_name: servico-email
+    ports:
+      - "4002:4002"
+    environment:
+      FLASK_APP: app.py
+      FLASK_RUN_HOST: localhost
+      PYTHONUNBUFFERED: '1'
+    restart: "no"
+    depends_on:
+      postgres-login-service:
+        condition: service_healthy
+
   web:
     build:
       context: ./frontend
@@ -101,6 +98,7 @@ services:
       - "6660:80"
     volumes:
       - ./frontend/web:/usr/share/nginx/html:ro
+
 
 volumes:
   postgres-login-data:
