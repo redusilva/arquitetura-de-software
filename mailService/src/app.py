@@ -6,7 +6,8 @@ from flasgger import Swagger, swag_from
 from dotenv import load_dotenv
 import os
 
-load_dotenv(dotenv_path="./mailService/src/.env")
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path=dotenv_path)
 
 AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL")
 LOG_SERVICE_URL = os.getenv("LOG_SERVICE_URL")
@@ -53,7 +54,7 @@ swagger = Swagger(app)
     }
 })
 def send_email():
-    """token = request.headers.get("Authorization")
+    token = request.headers.get("Authorization")
     if not token:
         return jsonify({"error": "Token ausente"}), 401
 
@@ -64,7 +65,7 @@ def send_email():
         user_info = auth_response.json().get("data", {})
     except requests.exceptions.RequestException:
         return jsonify({"error": "Erro ao verificar token"}), 500
-    """
+    
     data = request.get_json()
     to = data.get("to")
     subject = data.get("subject", "Sem assunto")
