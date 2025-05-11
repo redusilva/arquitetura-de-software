@@ -45,6 +45,8 @@ class NotesService {
             currentStudentDiscipline?.alunos?.email
         );
 
+        console.log(result);
+
         return {
             status: 201,
             message: {
