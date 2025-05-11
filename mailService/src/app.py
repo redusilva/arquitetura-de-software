@@ -5,6 +5,7 @@ from email.message import EmailMessage
 from flasgger import Swagger, swag_from
 from dotenv import load_dotenv
 import os
+from flask_cors import CORS
 
 dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(dotenv_path=dotenv_path)
@@ -19,7 +20,9 @@ SMTP_USERNAME = os.getenv("SMTP_USERNAME")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 app = Flask(__name__)
+CORS(app)
 swagger = Swagger(app)
+
 
 @app.route("/send-email", methods=["POST"])
 @swag_from({
