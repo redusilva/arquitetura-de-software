@@ -4,6 +4,10 @@ class StudentDisciplineRepository {
             where: {
                 id_aluno: studentId,
                 id_disciplina: disciplineId
+            },
+            include: {
+                alunos: true,
+                disciplinas: true
             }
         });
         return result;

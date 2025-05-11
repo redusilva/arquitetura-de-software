@@ -1,4 +1,5 @@
 const prisma = require('../config/db');
+const { sendEmail } = require('./email.service');
 
 class NotesService {
     constructor(
@@ -37,6 +38,12 @@ class NotesService {
                 message: 'Erro ao criar nota!'
             }
         }
+
+        await sendEmail(
+            `Olá, ${currentStudentDiscipline?.alunos?.nome}! \n\n\nFoi lançado a sua nota na disciplina ${currentStudentDiscipline?.disciplinas?.nome} no valor de ${result?.valor}`,
+            'Nota de avaliação',
+            currentStudentDiscipline?.alunos?.email
+        );
 
         return {
             status: 201,
