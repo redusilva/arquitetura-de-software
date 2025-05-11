@@ -1,2 +1,0 @@
-server="localhost:4003"
-authServer="localhost:4000"
