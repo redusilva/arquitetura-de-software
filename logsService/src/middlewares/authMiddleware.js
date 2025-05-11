@@ -1,20 +1,22 @@
-const { verifyToken } = require('../utils/auth');
+const axios = require('axios');
 
-const authenticateToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];
+const authServiceUrl = process.env.AUTH_SERVICE_URL;
 
-    if (!token) {
-        return res.status(401).json({ error: 'Token de autenticação não fornecido' });
+const authenticateToken = async (req, res, next) => {
+    try {
+        const token = req?.headers?.authorization?.split('Bearer ')[1];
+        const response = await axios.post(`${authServiceUrl}/users/authenticate`, {
+            token
+        });
+
+        if (response.status === 200) {
+            return next();
+        }
+        return res.status(401).json({ error: 'Usuário não autenticado!' });
+    } catch (error) {
+        console.error(error);
+        return res.status(401).json({ error: 'Usuário não autenticado!' });
     }
-
-    const result = verifyToken(token);
-
-    if (!result.valid) {
-        return res.status(401).json({ error: 'Token inválido' });
-    }
-
-    req.userId = result.payload.id;
-    next();
 };
 
 module.exports = authenticateToken;

@@ -1,3 +1,5 @@
+const LoggerService = require("../services/logs.service");
+
 class RegistrationController {
     constructor(disciplineService) {
         this.disciplineService = disciplineService;
@@ -17,8 +19,13 @@ class RegistrationController {
             })
         }
 
+        const logger = new LoggerService();
+
         const result = await this.disciplineService.create(data);
         if (result?.status === 201) {
+            logger.createLog({
+                message: `Disciplina ${result?.message?.id} cadastrada com sucesso!`,
+            }, req.token);
             return res.status(result?.status).json({
                 message: "Disciplina cadastrada com sucesso!",
                 data: result?.message

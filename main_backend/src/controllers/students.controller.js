@@ -1,3 +1,5 @@
+const LoggerService = require("../services/logs.service");
+
 class StudentController {
     constructor(userService) {
         this.studentService = userService;
@@ -18,8 +20,12 @@ class StudentController {
         }
 
         const result = await this.studentService.createStudent(data);
+        const logger = new LoggerService();
 
         if (result?.status === 201) {
+            logger.createLog({
+                message: `Estudante ${result?.message?.id} cadastrado com sucesso!`,
+            }, req.token);
             return res.status(result?.status).json({
                 message: "Aluno cadastrado com sucesso!",
                 data: result?.message

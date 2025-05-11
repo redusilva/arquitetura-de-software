@@ -1,3 +1,5 @@
+const LoggerService = require("../services/logs.service");
+
 class TeacherController {
     constructor(teacherService) {
         this.teacherService = teacherService;
@@ -10,8 +12,13 @@ class TeacherController {
             if (!data?.name || !data?.email || !data?.registration) {
                 return res.status(400).json({ error: 'Envie todos os campos obrigatórios!' });
             }
+
+            const logger = new LoggerService();
             const result = await this.teacherService.createTeacher(data);
             if (result?.status === 201) {
+                logger.createLog({
+                    message: `Professor ${result?.message?.id} cadastrado com sucesso!`,
+                }, req.token);
                 return res.status(result?.status).json({
                     message: "Professor cadastrado com sucesso!",
                     data: result?.message

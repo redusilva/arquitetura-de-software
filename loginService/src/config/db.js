@@ -9,7 +9,6 @@ const pool = new Pool({
     port: config.databasePort
 });
 
-
 async function validateDatabase() {
     try {
         await pool.query(`
