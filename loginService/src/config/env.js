@@ -12,7 +12,7 @@ const bcryptSaltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS, 10);
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
-const systemToken = process.env.SYSTEM_TOKEN;
+const systemToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzdHJpbmciLCJuYW1lIjoic3RyaW5nIiwiaWF0IjoxNzQ2OTY0MTcwfQ.ITM1N3kHpgMrTJOszlp2n8NSdnlcav--MAP3BQ0vHZY";
 const logsServiceUrl = process.env.LOGS_SERVICE_URL;
 const logsServiceName = process.env.EMAIL_SERVICE_NAME;
 const logsSystemId = process.env.EMAIL_SYSTEM_ID;

@@ -91,7 +91,8 @@ def send_email():
     
     try:
         log_data = {
-            "systemId": "email-service",
+            "systemId": "60b8f37e3d024e3b2c5f6a6c",
+            "service": "emails",
             "message": f"E-mail enviado para {to} com assunto '{subject}'",
             "level": "info",
             "source": "emails",
@@ -100,10 +101,12 @@ def send_email():
         requests.post(
             LOG_SERVICE_URL + "/api/logs",
             json=log_data,
-            #headers={"Authorization": token}
+            headers={"Authorization": "Bearer " + token}
         )
+        return jsonify({"message": "Email enviado com sucesso"}), 200
     except requests.exceptions.RequestException:
         print("Erro ao registrar log")
+        return jsonify({"error": "Erro ao salvar logs"}), 400
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4002)

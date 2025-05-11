@@ -4,7 +4,6 @@ const { logsServiceUrl, logsSystemId, logsServiceName } = require('../config/env
 class LoggerService {
     async createLog(data, token) {
         try {
-            console.log('chega: ', data, token);
             const response = await axios.post(
                 `${logsServiceUrl}/api/logs`,
                 {

@@ -5,9 +5,7 @@ const {
 } = require('../config/env');
 
 function generateToken(payload) {
-    const token = jwt.sign(payload, JWT_SECRET, {
-        expiresIn: JWT_EXPIRES_IN,
-    });
+    const token = jwt.sign(payload, JWT_SECRET);
     return token;
 }
 
