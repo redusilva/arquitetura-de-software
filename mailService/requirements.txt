@@ -3,4 +3,5 @@ requests
 flasgger
 python-dotenv
 gunicorn
-
+flask_cors
+pymongo

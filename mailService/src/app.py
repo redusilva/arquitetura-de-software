@@ -15,7 +15,7 @@ load_dotenv(dotenv_path=dotenv_path)
 
 AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL")
 LOG_SERVICE_URL = os.getenv("LOG_SERVICE_URL")
-SYSTEM_ID = os.getenv("SYSTEM_ID", "email-service")
+SYSTEM_ID = "60b8f37e3d024e3b2c5f6a6c"
 
 SMTP_SERVER = os.getenv("SMTP_SERVER")
 SMTP_PORT = int(os.getenv("SMTP_PORT", 587))

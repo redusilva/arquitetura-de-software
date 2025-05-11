@@ -15,6 +15,7 @@ const sendEmail = async (message, subject, to) => {
                 }
             }
         );
+
         if (response.status !== 200) {
             throw new Error(response.data.error);
         }
