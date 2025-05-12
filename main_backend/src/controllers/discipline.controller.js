@@ -23,7 +23,7 @@ class RegistrationController {
 
         const result = await this.disciplineService.create(data);
         if (result?.status === 201) {
-            logger.createLog({
+            await logger.createLog({
                 message: `Disciplina ${result?.message?.id} cadastrada com sucesso!`,
             }, req.token);
             return res.status(result?.status).json({

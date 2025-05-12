@@ -20,7 +20,7 @@ class NotesController {
         const logger = new LoggerService();
         const result = await this.notesService.create(studentId, disciplineId, value);
         if (result?.status === 201) {
-            logger.createLog({
+            await logger.createLog({
                 message: `Nota ${result?.message?.value} cadastrada para o aluno ${result?.message?.studentId} na disciplina ${result?.message?.disciplineId} com sucesso!`,
             }, req.token);
             return res.status(result?.status).json({

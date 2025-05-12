@@ -16,7 +16,7 @@ class TeacherController {
             const logger = new LoggerService();
             const result = await this.teacherService.createTeacher(data);
             if (result?.status === 201) {
-                logger.createLog({
+                await logger.createLog({
                     message: `Professor ${result?.message?.id} cadastrado com sucesso!`,
                 }, req.token);
                 return res.status(result?.status).json({
