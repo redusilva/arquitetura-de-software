@@ -38,7 +38,9 @@ services:
       retries: 10
 
   login-service:
-    image: redusilva/login-service-arquitetura-de-software:latest
+    build:
+      context: ./loginService
+      dockerfile: Dockerfile
     container_name: login-service
     ports:
       - "${LOGIN_SERVICE_PORT}:${SERVER_PORT}"
@@ -52,7 +54,9 @@ services:
     command: ["npm", "start"]
 
   main-backend:
-    image: redusilva/main-backend-arquitetura-de-software:latest
+    build:
+      context: ./main_backend
+      dockerfile: Dockerfile
     container_name: main-backend
     ports:
       - "${EXPOSE_MAIN_BACKEND_SERVICE_PORT}:${MAIN_BACKEND_SERVICE_PORT}"
@@ -70,7 +74,10 @@ services:
     command: sh -c "npx prisma db push && npm start"
 
   servico-email:
-    image: redusilva/mail-service-arquitetura-de-software:latest
+    build:
+      context: ./mailService
+      dockerfile: Dockerfile
+    image: my-python-app:latest
     container_name: servico-email
     ports:
       - "4002:4002"
@@ -92,7 +99,9 @@ services:
       - mongo_data:/data/db
 
   logs:
-    image: redusilva/logs-service-arquitetura-de-software:latest
+    build:
+      context: ./logsService
+      dockerfile: Dockerfile
     container_name: logs_service
     ports:
       - "4001:4001"
