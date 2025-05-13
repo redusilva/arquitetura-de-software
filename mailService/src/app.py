@@ -148,7 +148,32 @@ def get_all_emails():
     return jsonify(emails), 200
 
 
-@app.route("/emails/<id>", methods=["GET"])
+@app.route("/emails", methods=["GET"])
+@swag_from({
+    'tags': ['Emails'],
+    'summary': 'Listar todos os emails',
+    'description': 'Retorna uma lista de todos os emails armazenados no banco de dados.',
+    'responses': {
+        200: {
+            'description': 'Lista de emails retornada com sucesso',
+            'schema': {
+                'type': 'array',
+                'items': {
+                    'type': 'object',
+                    'properties': {
+                        '_id': {'type': 'string'},
+                        'to': {'type': 'string'},
+                        'subject': {'type': 'string'},
+                        'message': {'type': 'string'},
+                        'status': {'type': 'string'},
+                        'user_info': {'type': 'object'},
+                        'log_saved': {'type': 'boolean'}
+                    }
+                }
+            }
+        }
+    }
+})
 def get_email_by_id(id):
     try:
         email = mail_collection.find_one({"_id": ObjectId(id)})
@@ -158,6 +183,31 @@ def get_email_by_id(id):
         return jsonify(email), 200
     except Exception:
         return jsonify({"error": "ID inválido"}), 400
+
+@app.route("/emails", methods=["DELETE"])
+@swag_from({
+    'tags': ['Emails'],
+    'summary': 'Deletar todos os emails',
+    'description': 'Remove todos os registros de emails do banco de dados.',
+    'responses': {
+        200: {
+            'description': 'Todos os emails foram deletados com sucesso',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'message': {'type': 'string'}
+                }
+            }
+        },
+        500: {'description': 'Erro interno do servidor'}
+    }
+})
+def delete_all_emails():
+    try:
+        result = mail_collection.delete_many({})
+        return jsonify({"message": f"{result.deleted_count} registros deletados com sucesso."}), 200
+    except Exception as e:
+        return jsonify({"error": "Erro ao deletar os emails", "details": str(e)}), 500
 
 
 if __name__ == "__main__":
