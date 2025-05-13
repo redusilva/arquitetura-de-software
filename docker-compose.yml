@@ -7,14 +7,14 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: loginServiceUser
+      POSTGRES_PASSWORD: loginServicePassword
+      POSTGRES_DB: loginService
     volumes:
       - postgres-login-data:/var/lib/postgresql/data
     restart: "no"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -U loginServiceUser -d loginService"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -23,16 +23,16 @@ services:
     image: postgres:16
     container_name: postgres-main-backend
     ports:
-      - "${POSTGRES_MAIN_BACKEND_DATABASE_PORT}:${POSTGRES_MAIN_BACKEND_PORT}"
+      - "5001:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_MAIN_BACKEND_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_MAIN_BACKEND_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_MAIN_BACKEND_NAME}
+      POSTGRES_USER: mainBackendServiceUser
+      POSTGRES_PASSWORD: mainBackendServicePassword
+      POSTGRES_DB: main-backend
     volumes:
       - postgres-main-backend-data:/var/lib/postgresql/data
     restart: "no"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_MAIN_BACKEND_USER} -d ${POSTGRES_MAIN_BACKEND_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -U mainBackendServiceUser -d main-backend"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -41,7 +41,7 @@ services:
     image: redusilva/login-service-arquitetura-de-software:latest
     container_name: login-service
     ports:
-      - "${LOGIN_SERVICE_PORT}:${SERVER_PORT}"
+      - "4000:4000"
     depends_on:
       postgres-login-service:
         condition: service_healthy
@@ -55,15 +55,15 @@ services:
     image: redusilva/main-backend-arquitetura-de-software:latest
     container_name: main-backend
     ports:
-      - "${EXPOSE_MAIN_BACKEND_SERVICE_PORT}:${MAIN_BACKEND_SERVICE_PORT}"
+      - "4003:4003"
     depends_on:
       postgres-main-backend:
         condition: service_healthy
       logs:
         condition: service_started
     environment:
-      DATABASE_URL: "postgresql://${POSTGRES_MAIN_BACKEND_USER}:${POSTGRES_MAIN_BACKEND_PASSWORD}@postgres-main-backend:${POSTGRES_MAIN_BACKEND_PORT}/${POSTGRES_MAIN_BACKEND_NAME}"
-      SERVER_PORT: ${EXPOSE_MAIN_BACKEND_SERVICE_PORT}
+      DATABASE_URL: "postgresql://mainBackendServiceUser:mainBackendServicePassword@postgres-main-backend:5432/main-backend"
+      SERVER_PORT: 4000
       AUTH_SERVICE_URL: http://login-service:4000
     restart: "no"
     working_dir: /app
