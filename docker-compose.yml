@@ -63,7 +63,7 @@ services:
         condition: service_started
     environment:
       DATABASE_URL: "postgresql://mainBackendServiceUser:mainBackendServicePassword@postgres-main-backend:5432/main-backend"
-      SERVER_PORT: 4000
+      SERVER_PORT: 4003
       AUTH_SERVICE_URL: http://login-service:4000
     restart: "no"
     working_dir: /app

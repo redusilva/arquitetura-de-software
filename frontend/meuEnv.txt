@@ -1,2 +1,2 @@
-server="main-backend:4003"
-authServer="login-service:4000"
+server="localhost:4003"
+authServer="localhost:4000"
